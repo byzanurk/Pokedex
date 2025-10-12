@@ -1,5 +1,5 @@
 //
-//  ViewController.swift
+//  FavouritesViewController.swift
 //  Pokedex
 //
 //  Created by Beyza Nur Tekerek on 12.10.2025.
@@ -7,16 +7,14 @@
 
 import UIKit
 
-final class PokedexViewController: UIViewController {
+class FavouritesViewController: UIViewController {
     
     var coordinator: CoordinatorProtocol!
-    var viewModel: PokedexViewModelProtocol!
+    var viewModel: FavouritesViewModelProtocol!
 
     override func viewDidLoad() {
         super.viewDidLoad()
 
     }
 
-
 }
-
