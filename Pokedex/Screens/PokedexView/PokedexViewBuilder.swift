@@ -13,7 +13,7 @@ struct PokedexViewBuilder {
         let service: NetworkRouterProtocol = NetworkRouter()
         let viewModel = PokedexViewModel(service: service)
         let storyboard = UIStoryboard(name: "PokedexView", bundle: nil)
-        guard let pokedexVC = storyboard.instantiateViewController(withIdentifier: "PokedexViewController") as? PokedexViewController else { return UIViewController() }
+        guard let pokedexVC = storyboard.instantiateViewController(withIdentifier: "PokedexView") as? PokedexViewController else { return UIViewController() }
         
         pokedexVC.viewModel = viewModel
         pokedexVC.coordinator = coordinator

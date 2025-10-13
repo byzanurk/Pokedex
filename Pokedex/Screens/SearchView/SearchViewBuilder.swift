@@ -13,7 +13,7 @@ struct SearchViewBuilder {
         let service: NetworkRouterProtocol = NetworkRouter()
         let viewModel = SearchViewModel(service: service)
         let storyboard = UIStoryboard(name: "SearchView", bundle: nil)
-        guard let searchVC = storyboard.instantiateViewController(withIdentifier: "SearchViewController") as? SearchViewController else { return UIViewController() }
+        guard let searchVC = storyboard.instantiateViewController(withIdentifier: "SearchView") as? SearchViewController else { return UIViewController() }
         
         searchVC.viewModel = viewModel
         searchVC.coordinator = coordinator

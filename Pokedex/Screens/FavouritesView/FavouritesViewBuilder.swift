@@ -13,7 +13,7 @@ struct FavouritesViewBuilder {
         let service: NetworkRouterProtocol = NetworkRouter()
         let viewModel = FavouritesViewModel(service: service)
         let storyboard = UIStoryboard(name: "FavouritesView", bundle: nil)
-        guard let favouritesVC = storyboard.instantiateViewController(withIdentifier: "FavouritesViewController") as? FavouritesViewController else { return UIViewController() }
+        guard let favouritesVC = storyboard.instantiateViewController(withIdentifier: "FavouritesView") as? FavouritesViewController else { return UIViewController() }
         
         favouritesVC.viewModel = viewModel
         favouritesVC.coordinator = coordinator

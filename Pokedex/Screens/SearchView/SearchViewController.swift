@@ -7,14 +7,15 @@
 
 import UIKit
 
-class SearchViewController: UIViewController {
+final class SearchViewController: BaseViewController {
     
     var coordinator: CoordinatorProtocol!
     var viewModel: SearchViewModelProtocol!
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        title = "Search"
+        
     }
 
 }

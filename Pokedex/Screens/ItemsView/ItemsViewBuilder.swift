@@ -13,7 +13,7 @@ struct ItemsViewBuilder {
         let service: NetworkRouterProtocol = NetworkRouter()
         let viewModel = ItemsViewModel(service: service)
         let storyboard = UIStoryboard(name: "ItemsView", bundle: nil)
-        guard let itemsVC = storyboard.instantiateViewController(withIdentifier: "ItemsViewController") as? ItemsViewController else { return UIViewController() }
+        guard let itemsVC = storyboard.instantiateViewController(withIdentifier: "ItemsView") as? ItemsViewController else { return UIViewController() }
         
         itemsVC.viewModel = viewModel
         itemsVC.coordinator = coordinator

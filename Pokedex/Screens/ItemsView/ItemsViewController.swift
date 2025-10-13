@@ -7,13 +7,14 @@
 
 import UIKit
 
-class ItemsViewController: UIViewController {
+final class ItemsViewController: BaseViewController {
 
     var coordinator: CoordinatorProtocol!
     var viewModel: ItemsViewModelProtocol!
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        title = "Items"
 
     }
 

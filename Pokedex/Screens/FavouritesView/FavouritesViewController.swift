@@ -7,13 +7,14 @@
 
 import UIKit
 
-class FavouritesViewController: UIViewController {
+final class FavouritesViewController: BaseViewController {
     
     var coordinator: CoordinatorProtocol!
     var viewModel: FavouritesViewModelProtocol!
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        title = "Favourites"
 
     }
 
