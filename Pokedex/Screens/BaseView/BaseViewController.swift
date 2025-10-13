@@ -17,9 +17,16 @@ class BaseViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        setupView()
+        setupNavigationBar()
+    }
+    
+    private func setupView() {
         view.backgroundColor = .systemBackground
-        
+        tabBarItem.title = nil
+    }
+    
+    private func setupNavigationBar() {
         navigationController?.navigationBar.prefersLargeTitles = false
         navigationController?.navigationBar.isTranslucent = false
         
@@ -40,8 +47,9 @@ class BaseViewController: UIViewController {
         navigationController?.navigationBar.compactAppearance = appearance
         
         navigationController?.navigationBar.tintColor = .white
-        
-        tabBarItem.title = nil
     }
+
+
+    
 }
 
