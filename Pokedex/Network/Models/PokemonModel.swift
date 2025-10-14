@@ -13,7 +13,7 @@ struct Pokemon: Decodable, Hashable {
     let weight: Int
     let height: Int
     var isBookmarked: Bool = false
-    let cries: Cries
+    let cries: Cries?
     let sprite: Sprite
     let abilities: [Ability]
     let moves: [Move]
@@ -30,7 +30,7 @@ struct Pokemon: Decodable, Hashable {
         name: String,
         weight: Int,
         height: Int,
-        cries: Cries,
+        cries: Cries?,
         sprite: Sprite,
         abilities: [Ability],
         moves: [Move],
@@ -58,7 +58,7 @@ struct Pokemon: Decodable, Hashable {
         name = try container.decode(String.self, forKey: .name)
         weight = try container.decode(Int.self, forKey: .weight)
         height = try container.decode(Int.self, forKey: .height)
-        cries = try container.decode(Cries.self, forKey: .cries)
+        cries = try? container.decode(Cries.self, forKey: .cries)
         sprite = try container.decode(Sprite.self, forKey: .sprite)
         abilities = try container.decode([Ability].self, forKey: .abilities)
         moves = try container.decodeLimited([Move].self, forKey: .moves, limit: 10)
@@ -66,16 +66,24 @@ struct Pokemon: Decodable, Hashable {
         stats = try container.decode([Stat].self, forKey: .stats)
         isBookmarked = false
     }
+
+    var hp: Int {
+        stats.first(where: { $0.stat.name.lowercased() == "hp" })?.baseStat ?? 0
+    }
+    var attack: Int {
+        stats.first(where: { $0.stat.name.lowercased() == "attack" })?.baseStat ?? 0
+    }
+    var defense: Int {
+        stats.first(where: { $0.stat.name.lowercased() == "defense" })?.baseStat ?? 0
+    }
+    var speed: Int {
+        stats.first(where: { $0.stat.name.lowercased() == "speed" })?.baseStat ?? 0
+    }
 }
 
 struct Sprite: Decodable, Hashable {
-    let frontDefault: String
+    let frontDefault: String?
     let backDefault: String?
-
-    private enum CodingKeys: String, CodingKey {
-        case frontDefault = "front_default"
-        case backDefault = "back_default"
-    }
 }
 
 struct Cries: Decodable, Hashable {
@@ -97,16 +105,24 @@ struct TypeElement: Decodable, Hashable {
 struct Stat: Decodable, Hashable {
     let baseStat: Int
     let stat: APIItem
+    let effort: Int?
 
     private enum CodingKeys: String, CodingKey {
         case stat
         case baseStat = "base_stat"
+        case effort
+    }
+    
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        stat = try container.decode(APIItem.self, forKey: .stat)
+        effort = try? container.decode(Int.self, forKey: .effort)
+        baseStat = (try? container.decode(Int.self, forKey: .baseStat)) ?? 0
     }
 }
 
 // MARK: - Decoding helpers
 private extension KeyedDecodingContainer {
-    // Belirli bir anahtar altındaki diziyi limit ile decode eder
     func decodeLimited<T: Decodable>(_ type: [T].Type, forKey key: K, limit: Int) throws -> [T] {
         var nested = try self.nestedUnkeyedContainer(forKey: key)
         var result: [T] = []
@@ -119,4 +135,3 @@ private extension KeyedDecodingContainer {
         return result
     }
 }
-

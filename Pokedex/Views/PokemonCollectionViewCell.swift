@@ -17,7 +17,6 @@ final class PokemonCollectionViewCell: UICollectionViewCell {
     
     override func awakeFromNib() {
         super.awakeFromNib()
-        // Initialization code
         setupCell()
     }
     
@@ -36,7 +35,8 @@ final class PokemonCollectionViewCell: UICollectionViewCell {
         numberLabel.text = "#\(String(format: "%03d", pokemon.id))"
         nameLabel.text = pokemon.name.capitalized
         
-        if let imageUrl = URL(string: pokemon.sprite.frontDefault) {
+        if let urlString = pokemon.sprite.frontDefault,
+           let imageUrl = URL(string: urlString) {
             pokemonImageView.kf.setImage(with: imageUrl) { [weak self] result in
                 switch result {
                 case .success(let value):
@@ -48,10 +48,7 @@ final class PokemonCollectionViewCell: UICollectionViewCell {
             }
         } else {
             containerView.backgroundColor = UIColor.systemGray5
+            pokemonImageView.image = UIImage(named: "PokeBall")
         }
     }
 }
-
-    
-
-

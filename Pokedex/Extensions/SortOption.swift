@@ -30,6 +30,8 @@ enum SortOption: String, CaseIterable {
         }
     }
     
+    // Varsayılan: artan (ascending) sıralama
+    // Azalan istersen ilgili satırda < yerine > kullan
     var sortDescriptor: (Pokemon, Pokemon) -> Bool {
         switch self {
         case .number:
@@ -41,29 +43,13 @@ enum SortOption: String, CaseIterable {
         case .weight:
             return { $0.weight < $1.weight }
         case .hp:
-            return {
-                let hp1 = $0.stats.first { $0.stat.name == "hp" }?.baseStat ?? 0
-                let hp2 = $1.stats.first { $0.stat.name == "hp" }?.baseStat ?? 0
-                return hp1 < hp2
-            }
+            return { $0.hp > $1.hp }
         case .attack:
-            return {
-                let attack1 = $0.stats.first { $0.stat.name == "attack" }?.baseStat ?? 0
-                let attack2 = $1.stats.first { $0.stat.name == "attack" }?.baseStat ?? 0
-                return attack1 < attack2
-            }
+            return { $0.attack > $1.attack }
         case .defense:
-            return {
-                let defense1 = $0.stats.first { $0.stat.name == "defense" }?.baseStat ?? 0
-                let defense2 = $1.stats.first { $0.stat.name == "defense" }?.baseStat ?? 0
-                return defense1 < defense2
-            }
+            return { $0.defense > $1.defense }
         case .speed:
-            return {
-                let speed1 = $0.stats.first { $0.stat.name == "speed" }?.baseStat ?? 0
-                let speed2 = $1.stats.first { $0.stat.name == "speed" }?.baseStat ?? 0
-                return speed1 < speed2
-            }
+            return { $0.speed > $1.speed }
         }
     }
 }

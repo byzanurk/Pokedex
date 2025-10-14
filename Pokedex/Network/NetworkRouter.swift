@@ -9,6 +9,7 @@ import Foundation
 
 protocol NetworkRouterProtocol {
     func fetchPokemonList(limit: Int, offset: Int, completion: @escaping (Result<PokemonListResponse, NetworkError>) -> Void)
+    func fetchPokemonDetail(id: Int, completion: @escaping (Result<Pokemon, NetworkError>) -> Void)
 }
 
 final class NetworkRouter: NetworkRouterProtocol {
@@ -24,5 +25,9 @@ final class NetworkRouter: NetworkRouterProtocol {
 
         service.request(endpoint, completion: completion)
     }
+    
+    func fetchPokemonDetail(id: Int, completion: @escaping (Result<Pokemon, NetworkError>) -> Void) {
+        let endpoint = PokemonEndpoint.detail(id: id)
+        service.request(endpoint, completion: completion)
+    }
 }
-

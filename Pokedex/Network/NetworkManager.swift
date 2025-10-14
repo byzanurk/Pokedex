@@ -29,7 +29,6 @@ final class NetworkManager: NetworkManagerProtocol {
         }
         
         let task = session.dataTask(with: request) { [decoder] data, response, error in
-            // Hataları map et
             if let _ = error {
                 DispatchQueue.main.async { completion(.failure(.invalidResponse)) }
                 return
@@ -50,6 +49,23 @@ final class NetworkManager: NetworkManagerProtocol {
                 let decoded = try decoder.decode(T.self, from: data)
                 DispatchQueue.main.async { completion(.success(decoded)) }
             } catch {
+                // Ayrıntılı hata logu
+                if let decodingError = error as? DecodingError {
+                    switch decodingError {
+                    case .typeMismatch(let type, let context):
+                        print("Decoding typeMismatch: \(type), context: \(context.debugDescription), codingPath: \(context.codingPath)")
+                    case .valueNotFound(let type, let context):
+                        print("Decoding valueNotFound: \(type), context: \(context.debugDescription), codingPath: \(context.codingPath)")
+                    case .keyNotFound(let key, let context):
+                        print("Decoding keyNotFound: \(key), context: \(context.debugDescription), codingPath: \(context.codingPath)")
+                    case .dataCorrupted(let context):
+                        print("Decoding dataCorrupted: \(context.debugDescription), codingPath: \(context.codingPath)")
+                    @unknown default:
+                        print("Decoding unknown error: \(decodingError)")
+                    }
+                } else {
+                    print("Decoding error: \(error)")
+                }
                 DispatchQueue.main.async { completion(.failure(.decodingError)) }
             }
         }
