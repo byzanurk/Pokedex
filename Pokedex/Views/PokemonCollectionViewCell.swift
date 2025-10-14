@@ -6,12 +6,52 @@
 //
 
 import UIKit
+import Kingfisher
 
-class PokemonCollectionViewCell: UICollectionViewCell {
+final class PokemonCollectionViewCell: UICollectionViewCell {
 
+    @IBOutlet private weak var containerView: UIView!
+    @IBOutlet private weak var numberLabel: UILabel!
+    @IBOutlet private weak var pokemonImageView: UIImageView!
+    @IBOutlet private weak var nameLabel: UILabel!
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
+        setupCell()
+    }
+    
+    private func setupCell() {
+        numberLabel.font = UIFont.pixel12
+        numberLabel.textColor = .white
+        
+        nameLabel.font = UIFont.pixel12
+        nameLabel.textColor = .white
+
+        pokemonImageView.contentMode = .scaleAspectFit
+        pokemonImageView.clipsToBounds = true
     }
 
+    func configure(with pokemon: Pokemon) {
+        numberLabel.text = "#\(String(format: "%03d", pokemon.id))"
+        nameLabel.text = pokemon.name.capitalized
+        
+        if let imageUrl = URL(string: pokemon.sprite.frontDefault) {
+            pokemonImageView.kf.setImage(with: imageUrl) { [weak self] result in
+                switch result {
+                case .success(let value):
+                    let dominantColor = value.image.dominantColor ?? UIColor.systemGray5
+                    self?.containerView.backgroundColor = dominantColor.withAlphaComponent(0.85)
+                case .failure(_):
+                    self?.containerView.backgroundColor = UIColor.systemGray5
+                }
+            }
+        } else {
+            containerView.backgroundColor = UIColor.systemGray5
+        }
+    }
 }
+
+    
+
+

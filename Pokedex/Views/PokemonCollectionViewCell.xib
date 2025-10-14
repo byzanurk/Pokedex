@@ -1,21 +1,77 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="13142" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="24128" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_12" orientation="portrait" appearance="light"/>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12042"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="24063"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
-        <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="gTV-IL-0wX" customClass="PokemonCollectionViewCell" customModuleProvider="target">
-            <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
+        <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="PokemonCollectionViewCell" id="gTV-IL-0wX" customClass="PokemonCollectionViewCell" customModule="Pokedex" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="120" height="120"/>
             <autoresizingMask key="autoresizingMask"/>
             <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
-                <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
-                <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>
+                <rect key="frame" x="0.0" y="0.0" width="120" height="120"/>
+                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                <subviews>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="EdW-4K-pPZ">
+                        <rect key="frame" x="0.0" y="0.0" width="120" height="120"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Teq-Uw-qS5">
+                                <rect key="frame" x="4" y="4" width="112" height="18"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fs4-0Y-uRf">
+                                <rect key="frame" x="4" y="91.666666666666671" width="112" height="20.333333333333329"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="yn5-MX-JWg">
+                                <rect key="frame" x="0.0" y="22" width="120" height="69.666666666666671"/>
+                            </imageView>
+                        </subviews>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstAttribute="bottom" secondItem="fs4-0Y-uRf" secondAttribute="bottom" constant="8" id="2Rl-qa-kSM"/>
+                            <constraint firstAttribute="trailing" secondItem="yn5-MX-JWg" secondAttribute="trailing" id="6Eh-CH-osy"/>
+                            <constraint firstItem="yn5-MX-JWg" firstAttribute="leading" secondItem="EdW-4K-pPZ" secondAttribute="leading" id="M55-jy-QAH"/>
+                            <constraint firstItem="fs4-0Y-uRf" firstAttribute="top" secondItem="yn5-MX-JWg" secondAttribute="bottom" id="ZQt-zT-W2m"/>
+                            <constraint firstItem="yn5-MX-JWg" firstAttribute="top" secondItem="Teq-Uw-qS5" secondAttribute="bottom" id="gND-qo-xhw"/>
+                            <constraint firstAttribute="trailing" secondItem="fs4-0Y-uRf" secondAttribute="trailing" constant="4" id="i7S-m7-BsW"/>
+                            <constraint firstItem="Teq-Uw-qS5" firstAttribute="leading" secondItem="EdW-4K-pPZ" secondAttribute="leading" constant="4" id="ijt-ap-C0Z"/>
+                            <constraint firstItem="fs4-0Y-uRf" firstAttribute="leading" secondItem="EdW-4K-pPZ" secondAttribute="leading" constant="4" id="sAn-6N-K4a"/>
+                            <constraint firstAttribute="trailing" secondItem="Teq-Uw-qS5" secondAttribute="trailing" constant="4" id="v4F-Bj-Ty0"/>
+                            <constraint firstItem="Teq-Uw-qS5" firstAttribute="top" secondItem="EdW-4K-pPZ" secondAttribute="top" constant="4" id="ynd-0f-RqE"/>
+                        </constraints>
+                    </view>
+                </subviews>
             </view>
             <viewLayoutGuide key="safeArea" id="ZTg-uK-7eu"/>
+            <constraints>
+                <constraint firstAttribute="bottom" secondItem="EdW-4K-pPZ" secondAttribute="bottom" id="BbZ-Ce-aU9"/>
+                <constraint firstItem="EdW-4K-pPZ" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" id="LT3-IZ-Adq"/>
+                <constraint firstItem="EdW-4K-pPZ" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" id="QNl-iJ-88Z"/>
+                <constraint firstAttribute="trailing" secondItem="EdW-4K-pPZ" secondAttribute="trailing" id="U8L-o8-RPN"/>
+            </constraints>
+            <size key="customSize" width="100" height="83"/>
+            <connections>
+                <outlet property="containerView" destination="EdW-4K-pPZ" id="ge2-bP-VLs"/>
+                <outlet property="nameLabel" destination="fs4-0Y-uRf" id="Raz-Eb-Ix8"/>
+                <outlet property="numberLabel" destination="Teq-Uw-qS5" id="YiL-hs-C9W"/>
+                <outlet property="pokemonImageView" destination="yn5-MX-JWg" id="rEB-QO-mER"/>
+            </connections>
+            <point key="canvasLocation" x="-47.328244274809158" y="110.56338028169014"/>
         </collectionViewCell>
     </objects>
+    <resources>
+        <systemColor name="systemBackgroundColor">
+            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+    </resources>
 </document>
