@@ -110,6 +110,12 @@ extension PokedexViewController: UICollectionViewDelegate, UICollectionViewDataS
         return cell
     }
     
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        let selectedPokemon = viewModel.pokemons[indexPath.row]
+        let pokemonDetailVC = PokemonDetailViewBuilder.build(coordinator: coordinator)
+        navigate(to: pokemonDetailVC, coordinator: coordinator)
+    }
+    
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         let inset: CGFloat = 2
         let spacing: CGFloat = 2
@@ -161,3 +167,4 @@ extension PokedexViewController: UIPopoverPresentationControllerDelegate {
         return .none
     }
 }
+
