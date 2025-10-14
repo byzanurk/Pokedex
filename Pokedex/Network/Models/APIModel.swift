@@ -7,11 +7,12 @@
 
 import Foundation
 
+struct PokemonListResponse: Codable {
+    let results: [APIItem]
+}
+
 struct APIItem: Codable, Hashable {
     let name: String
     let url: String
 }
 
-struct PokemonListResponse: Codable {
-    let results: [APIItem]
-}

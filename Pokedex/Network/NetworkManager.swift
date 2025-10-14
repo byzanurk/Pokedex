@@ -8,7 +8,6 @@
 import Foundation
 
 protocol NetworkManagerProtocol {
-//    func request<T: Decodable>(_ endpoint: Endpoint) async throws -> T
     func request<T: Decodable>(_ endpoint: Endpoint, completion: @escaping (Result<T, NetworkError>) -> Void)
 }
 
@@ -23,29 +22,6 @@ final class NetworkManager: NetworkManagerProtocol {
         self.decoder.keyDecodingStrategy = .convertFromSnakeCase
     }
     
-//    func request<T: Decodable>(_ endpoint: Endpoint) async throws -> T {
-//        guard let request = endpoint.urlRequest else {
-//            throw NetworkError.invalidURL
-//        }
-//        
-//        let (data, response) = try await session.data(for: request)
-//        
-//        guard let httpResponse = response as? HTTPURLResponse else {
-//            throw NetworkError.invalidResponse
-//        }
-//        
-//        guard (200...299).contains(httpResponse.statusCode) else {
-//            throw NetworkError.serverError(httpResponse.statusCode)
-//        }
-//        
-//        do {
-//            return try decoder.decode(T.self, from: data)
-//        } catch {
-//            throw NetworkError.decodingError
-//        }
-//    }
-    
-    // Completion tabanlı overload
     func request<T: Decodable>(_ endpoint: Endpoint, completion: @escaping (Result<T, NetworkError>) -> Void) {
         guard let request = endpoint.urlRequest else {
             DispatchQueue.main.async { completion(.failure(.invalidURL)) }
