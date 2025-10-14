@@ -26,7 +26,7 @@ final class TabBarController: UITabBarController {
     }
     
     private func setupTabBar() {
-        view.backgroundColor = .systemBackground
+        view.backgroundColor = .black
         
         let pokedexVC = PokedexViewBuilder.build(coordinator: coordinator)
         let itemsVC = ItemsViewBuilder.build(coordinator: coordinator)
