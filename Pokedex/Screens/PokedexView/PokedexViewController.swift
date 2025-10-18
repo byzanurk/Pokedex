@@ -112,7 +112,7 @@ extension PokedexViewController: UICollectionViewDelegate, UICollectionViewDataS
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let selectedPokemon = viewModel.pokemons[indexPath.row]
-        let pokemonDetailVC = PokemonDetailViewBuilder.build(coordinator: coordinator)
+        let pokemonDetailVC = PokemonDetailViewBuilder.build(coordinator: coordinator, selectedPokemon: selectedPokemon)
         navigate(to: pokemonDetailVC, coordinator: coordinator)
     }
     

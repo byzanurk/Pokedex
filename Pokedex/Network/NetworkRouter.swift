@@ -22,7 +22,6 @@ final class NetworkRouter: NetworkRouterProtocol {
     
     func fetchPokemonList(limit: Int, offset: Int, completion: @escaping (Result<PokemonListResponse, NetworkError>) -> Void) {
         let endpoint = PokemonEndpoint.list(limit: limit, offset: offset)
-
         service.request(endpoint, completion: completion)
     }
     

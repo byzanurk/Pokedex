@@ -30,8 +30,6 @@ enum SortOption: String, CaseIterable {
         }
     }
     
-    // Varsayılan: artan (ascending) sıralama
-    // Azalan istersen ilgili satırda < yerine > kullan
     var sortDescriptor: (Pokemon, Pokemon) -> Bool {
         switch self {
         case .number:
@@ -39,9 +37,9 @@ enum SortOption: String, CaseIterable {
         case .name:
             return { $0.name.lowercased() < $1.name.lowercased() }
         case .height:
-            return { $0.height < $1.height }
+            return { ($0.height ?? Int.min) < ($1.height ?? Int.min) }
         case .weight:
-            return { $0.weight < $1.weight }
+            return { ($0.weight ?? Int.min) < ($1.weight ?? Int.min) }
         case .hp:
             return { $0.hp > $1.hp }
         case .attack:

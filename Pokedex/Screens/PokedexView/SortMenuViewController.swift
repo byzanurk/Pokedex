@@ -143,7 +143,6 @@ final class SortMenuViewController: UIViewController {
     
     private func sizeHeaderToFit() {
         guard let header = tableView.tableHeaderView else { return }
-        // Auto Layout ile header’ın intrinsic boyutunu hesapla
         header.setNeedsLayout()
         header.layoutIfNeeded()
         let targetSize = CGSize(width: tableView.bounds.width, height: UIView.layoutFittingCompressedSize.height)
@@ -161,8 +160,6 @@ final class SortMenuViewController: UIViewController {
         cell.backgroundColor = .clear
         cell.contentView.backgroundColor = .clear
         cell.selectionStyle = .default
-        
-        // Remove old subviews if any (in case of reuse)
         cell.contentView.subviews.forEach { $0.removeFromSuperview() }
         
         let iconImageView = UIImageView()

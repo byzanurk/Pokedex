@@ -46,6 +46,10 @@ final class NetworkManager: NetworkManagerProtocol {
                 return
             }
             do {
+//                // Debug: API'den gelen ham JSON'u konsola bastır
+//                if let json = try? JSONSerialization.jsonObject(with: data, options: []) {
+//                    print("Pokemon Detay JSON:", json)
+//                }
                 let decoded = try decoder.decode(T.self, from: data)
                 DispatchQueue.main.async { completion(.success(decoded)) }
             } catch {

@@ -7,18 +7,41 @@
 
 import Foundation
 
-struct Pokemon: Decodable, Hashable {
+// MARK: - Root model
+struct PokemonListResponse: Decodable {
+    let count: Int
+    let results: [PokemonListItem]
+}
+
+struct PokemonListItem: Decodable {
+    let name: String
+    let url: String
+}
+
+struct Pokemon: Decodable {
     let id: Int
     let name: String
-    let weight: Int
-    let height: Int
-    var isBookmarked: Bool = false
+    let weight: Int?
+    let height: Int?
     let cries: Cries?
     let sprite: Sprite
-    let abilities: [Ability]
-    let moves: [Move]
-    let types: [TypeElement]
-    let stats: [Stat]
+    let abilities: [Ability]?
+    let moves: [Move]?
+    let types: [Type]?
+    let stats: [Stat]?
+
+    var hp: Int {
+        statValue(named: "hp")
+    }
+    var attack: Int {
+        statValue(named: "attack")
+    }
+    var defense: Int {
+        statValue(named: "defense")
+    }
+    var speed: Int {
+        statValue(named: "speed")
+    }
 
     private enum CodingKeys: String, CodingKey {
         case id, name, weight, height, cries, abilities, moves, types, stats
@@ -30,13 +53,12 @@ struct Pokemon: Decodable, Hashable {
         name: String,
         weight: Int,
         height: Int,
-        cries: Cries?,
+        cries: Cries,
         sprite: Sprite,
         abilities: [Ability],
         moves: [Move],
-        types: [TypeElement],
-        stats: [Stat],
-        isBookmarked: Bool = false
+        types: [Type],
+        stats: [Stat]
     ) {
         self.id = id
         self.name = name
@@ -48,90 +70,68 @@ struct Pokemon: Decodable, Hashable {
         self.moves = moves
         self.types = types
         self.stats = stats
-        self.isBookmarked = isBookmarked
     }
 
     init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-
         id = try container.decode(Int.self, forKey: .id)
         name = try container.decode(String.self, forKey: .name)
-        weight = try container.decode(Int.self, forKey: .weight)
-        height = try container.decode(Int.self, forKey: .height)
+        weight = try? container.decode(Int.self, forKey: .weight)
+        height = try? container.decode(Int.self, forKey: .height)
         cries = try? container.decode(Cries.self, forKey: .cries)
-        sprite = try container.decode(Sprite.self, forKey: .sprite)
-        abilities = try container.decode([Ability].self, forKey: .abilities)
-        moves = try container.decodeLimited([Move].self, forKey: .moves, limit: 10)
-        types = try container.decode([TypeElement].self, forKey: .types)
-        stats = try container.decode([Stat].self, forKey: .stats)
-        isBookmarked = false
+
+        sprite = (try? container.decode(Sprite.self, forKey: .sprite))
+            ?? Sprite(frontDefault: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/0.png",
+                      backDefault: "")
+
+        abilities = try? container.decode([Ability].self, forKey: .abilities)
+        moves = try? container.decode([Move].self, forKey: .moves)
+        types = try? container.decode([Type].self, forKey: .types)
+        stats = try? container.decode([Stat].self, forKey: .stats)
     }
 
-    var hp: Int {
-        stats.first(where: { $0.stat.name.lowercased() == "hp" })?.baseStat ?? 0
-    }
-    var attack: Int {
-        stats.first(where: { $0.stat.name.lowercased() == "attack" })?.baseStat ?? 0
-    }
-    var defense: Int {
-        stats.first(where: { $0.stat.name.lowercased() == "defense" })?.baseStat ?? 0
-    }
-    var speed: Int {
-        stats.first(where: { $0.stat.name.lowercased() == "speed" })?.baseStat ?? 0
+    private func statValue(named name: String) -> Int {
+        let key = name.trimmingCharacters(in: .whitespacesAndNewlines).lowercased()
+        return stats?.first {
+            $0.stat.name.trimmingCharacters(in: .whitespacesAndNewlines).lowercased() == key
+        }?.baseStat ?? 0
     }
 }
 
-struct Sprite: Decodable, Hashable {
-    let frontDefault: String?
-    let backDefault: String?
+// MARK: - Nested models
+struct Ability: Decodable {
+    let ability: PokemonListItem
 }
 
-struct Cries: Decodable, Hashable {
+struct Sprite: Decodable {
+    let frontDefault: String
+    let backDefault: String
+}
+
+struct Move: Decodable {
+    let move: PokemonListItem
+}
+
+struct Cries: Decodable {
     let latest: String?
 }
 
-struct Ability: Decodable, Hashable {
-    let ability: APIItem
+struct Type: Decodable {
+    let type: PokemonListItem
 }
 
-struct Move: Decodable, Hashable {
-    let move: APIItem
-}
-
-struct TypeElement: Decodable, Hashable {
-    let type: APIItem
-}
-
-struct Stat: Decodable, Hashable {
+struct Stat: Decodable {
     let baseStat: Int
-    let stat: APIItem
-    let effort: Int?
+    let stat: PokemonListItem
 
     private enum CodingKeys: String, CodingKey {
         case stat
         case baseStat = "base_stat"
-        case effort
     }
-    
+
     init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        stat = try container.decode(APIItem.self, forKey: .stat)
-        effort = try? container.decode(Int.self, forKey: .effort)
-        baseStat = (try? container.decode(Int.self, forKey: .baseStat)) ?? 0
-    }
-}
-
-// MARK: - Decoding helpers
-private extension KeyedDecodingContainer {
-    func decodeLimited<T: Decodable>(_ type: [T].Type, forKey key: K, limit: Int) throws -> [T] {
-        var nested = try self.nestedUnkeyedContainer(forKey: key)
-        var result: [T] = []
-        result.reserveCapacity(min(limit, nested.count ?? limit))
-
-        while !nested.isAtEnd && result.count < limit {
-            let value = try nested.decode(T.self)
-            result.append(value)
-        }
-        return result
+        stat = try container.decode(PokemonListItem.self, forKey: .stat)
+        baseStat = try container.decodeIfPresent(Int.self, forKey: .baseStat) ?? 0
     }
 }

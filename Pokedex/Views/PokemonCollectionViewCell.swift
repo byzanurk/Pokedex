@@ -35,15 +35,18 @@ final class PokemonCollectionViewCell: UICollectionViewCell {
         numberLabel.text = "#\(String(format: "%03d", pokemon.id))"
         nameLabel.text = pokemon.name.capitalized
         
-        if let urlString = pokemon.sprite.frontDefault,
-           let imageUrl = URL(string: urlString) {
+        print("Pokemon: \(pokemon.name), frontDefault: \(pokemon.sprite.frontDefault)")
+
+        let imageUrl = URL(string: pokemon.sprite.frontDefault)
+        if let imageUrl = imageUrl {
             pokemonImageView.kf.setImage(with: imageUrl) { [weak self] result in
                 switch result {
                 case .success(let value):
                     let dominantColor = value.image.dominantColor ?? UIColor.systemGray5
                     self?.containerView.backgroundColor = dominantColor.withAlphaComponent(0.85)
-                case .failure(_):
+                case .failure:
                     self?.containerView.backgroundColor = UIColor.systemGray5
+                    self?.pokemonImageView.image = UIImage(named: "PokeBall")
                 }
             }
         } else {
