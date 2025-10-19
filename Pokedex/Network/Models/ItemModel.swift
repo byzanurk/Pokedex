@@ -8,24 +8,22 @@
 import Foundation
 
 // MARK: - ItemDetail
-class ItemDetail: Decodable {
-    let id: Int
-    let name: String
-    let sprites: ItemSprite
-    let category: APIItem
-    let effect: [Effect]
+struct ItemDetail: Decodable {
+    let id: Int?
+    let name: String?
+    let sprites: ItemSprite?
+    let category: APIItem?
+    let effectEntries: [ItemEffectEntry]?
     
     private enum CodingKeys: String, CodingKey {
         case id, name, sprites, category
-        case effect = "effect_entries"
+        case effectEntries = "effect_entries"
     }
     
-    init(id: Int, name: String, sprites: ItemSprite, category: APIItem, effect: [Effect]) {
-        self.id = id
-        self.name = name
-        self.sprites = sprites
-        self.category = category
-        self.effect = effect
+    var englishEffect: String? {
+        effectEntries?
+            .first(where: { $0.language.name.lowercased() == "en" })?
+            .effect
     }
 }
 
@@ -35,22 +33,30 @@ struct ItemData {
     let items: [ItemDetail]
     
     var icon: String? {
-        items.first?.sprites.default
+        items.first?.sprites?.defaultURL
     }
 }
 
 // MARK: - ItemSprite
 struct ItemSprite: Decodable {
-    let `default`: String
+    let defaultURL: String?
     
     private enum CodingKeys: String, CodingKey {
-        case `default` = "default"
+        case defaultURL = "default"
     }
 }
 
-// MARK: - Effect
-struct Effect: Decodable {
-    let effect: String
+// MARK: - ItemEffectEntry
+struct ItemEffectEntry: Decodable {
+    let effect: String?
+    let shortEffect: String?
+    let language: APIItem
+    
+    private enum CodingKeys: String, CodingKey {
+        case effect
+        case shortEffect = "short_effect"
+        case language
+    }
 }
 
 // MARK: - Mock Item
@@ -58,11 +64,11 @@ extension ItemDetail {
     static var common: ItemDetail {
         ItemDetail(
             id: 0,
-            name: "Item",
-            sprites: ItemSprite(default: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/items/honey.png"),
+            name: "item",
+            sprites: ItemSprite(defaultURL: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/items/honey.png"),
             category: APIItem(name: "category", url: ""),
-            effect: [
-                Effect(effect: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.")
+            effectEntries: [
+                ItemEffectEntry(effect: "Lorem ipsum dolor sit amet...", shortEffect: "Lorem ipsum", language: APIItem(name: "en", url: ""))
             ]
         )
     }

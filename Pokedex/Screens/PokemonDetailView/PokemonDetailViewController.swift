@@ -50,7 +50,6 @@ class PokemonDetailViewController: UIViewController {
     @IBOutlet private weak var attackValueLabel: UILabel!
     @IBOutlet private weak var movesTitleLabel: UILabel!
     @IBOutlet private weak var movesValueLabel: UILabel!
-    
     @IBOutlet private weak var flipButton: UIButton!
     @IBOutlet private weak var favoriteButton: UIButton!
     

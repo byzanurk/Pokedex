@@ -16,3 +16,9 @@ struct APIItem: Decodable {
     let name: String
     let url: String
 }
+
+// PokeAPI'nin çoğu liste cevabı bu yapıda gelir
+struct NamedAPIResourceList: Decodable {
+    let count: Int
+    let results: [APIItem]
+}

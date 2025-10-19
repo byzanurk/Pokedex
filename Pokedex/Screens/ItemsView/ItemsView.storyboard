@@ -15,13 +15,28 @@
                     <view key="view" contentMode="scaleToFill" id="5EZ-qb-Rvc">
                         <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="cEn-3h-Gsr">
+                                <rect key="frame" x="0.0" y="118" width="393" height="734"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                            </tableView>
+                        </subviews>
                         <viewLayoutGuide key="safeArea" id="vDu-zF-Fre"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="cEn-3h-Gsr" firstAttribute="leading" secondItem="vDu-zF-Fre" secondAttribute="leading" id="HS4-mY-rDx"/>
+                            <constraint firstItem="cEn-3h-Gsr" firstAttribute="top" secondItem="vDu-zF-Fre" secondAttribute="top" id="K90-2d-rkU"/>
+                            <constraint firstItem="vDu-zF-Fre" firstAttribute="trailing" secondItem="cEn-3h-Gsr" secondAttribute="trailing" id="PvX-UI-5qb"/>
+                            <constraint firstAttribute="bottom" secondItem="cEn-3h-Gsr" secondAttribute="bottom" id="zbs-g5-ubY"/>
+                        </constraints>
                     </view>
+                    <connections>
+                        <outlet property="tableView" destination="cEn-3h-Gsr" id="25a-HO-405"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Ief-a0-LHa" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="140" y="131"/>
+            <point key="canvasLocation" x="139.69465648854961" y="130.98591549295776"/>
         </scene>
     </scenes>
     <resources>

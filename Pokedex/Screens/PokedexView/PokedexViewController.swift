@@ -67,7 +67,6 @@ final class PokedexViewController: BaseViewController {
     
     // MARK:  Actions
     @objc private func sortButtonTapped() {
-        print("sort button tapped")
         let sortMenu = SortMenuViewController(currentOption: viewModel.currentSortOption)
         sortMenu.delegate = self
         
@@ -80,7 +79,6 @@ final class PokedexViewController: BaseViewController {
     }
     
     @objc private func gridButtonTapped() {
-        print("grid button tapped")
         numberOfColumns = (numberOfColumns == 3) ? 4 : 3
         gridButton.image = UIImage(systemName: numberOfColumns == 3 ? "square.grid.4x3.fill" : "square.grid.3x3.fill")
         UIView.animate(withDuration: 0.3) {
