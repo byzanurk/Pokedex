@@ -66,6 +66,8 @@ class PokemonDetailViewController: UIViewController {
         
         if let pokemon = selectedPokemon {
             viewModel.selectedPokemon = pokemon
+            isBookmarked = FavouritesManager.isFavourite(pokemon.id)
+            updateFavouriteButtonAppearance()
             bindUI(with: pokemon)
         } else {
             viewModel.fetchPokemonDetail()
@@ -136,6 +138,13 @@ class PokemonDetailViewController: UIViewController {
         favoriteButton.setImage(bookmarkImage, for: .normal)
         favoriteButton.tintColor = .white
     }
+    
+    private func updateFavouriteButtonAppearance() {
+        let symbolName = isBookmarked ? "bookmark.fill" : "bookmark"
+        let config = UIImage.SymbolConfiguration(pointSize: 18, weight: .semibold)
+        favoriteButton.setImage(UIImage(systemName: symbolName, withConfiguration: config), for: .normal)
+        favoriteButton.tintColor = .white    }
+        
     
     // MARK: - Binding
     private func bindUI(with pokemon: Pokemon) {
@@ -263,11 +272,27 @@ class PokemonDetailViewController: UIViewController {
     }
     
     @IBAction func favoriteButtonTapped(_ sender: Any) {
+        guard let pokemon = viewModel.selectedPokemon ?? selectedPokemon else { return }
         isBookmarked.toggle()
+        
         let symbolName = isBookmarked ? "bookmark.fill" : "bookmark"
         let config = UIImage.SymbolConfiguration(pointSize: 18, weight: .semibold)
         favoriteButton.setImage(UIImage(systemName: symbolName, withConfiguration: config), for: .normal)
-        favoriteButton.tintColor = isBookmarked ? .systemGray4 : .white
+        favoriteButton.tintColor = .white
+        
+        if isBookmarked {
+            FavouritesManager.add(pokemon.id)
+        } else {
+            FavouritesManager.remove(pokemon.id)
+        }
+        
+        // popup message
+        let message = isBookmarked ? "\(pokemon.name.capitalized) added to favourites!" : "\(pokemon.name.capitalized) removed from favourites!"
+        let alert = UIAlertController(title: nil, message: message, preferredStyle: .alert)
+        self.present(alert, animated: true)
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1.2) {
+            alert.dismiss(animated: true)
+        }
     }
     
     // MARK: - Navigation Bar Appearance (local)
