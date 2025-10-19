@@ -7,17 +7,6 @@
 
 import Foundation
 
-// MARK: - Root model
-struct PokemonListResponse: Decodable {
-    let count: Int
-    let results: [PokemonListItem]
-}
-
-struct PokemonListItem: Decodable {
-    let name: String
-    let url: String
-}
-
 struct Pokemon: Decodable {
     let id: Int
     let name: String
@@ -100,7 +89,7 @@ struct Pokemon: Decodable {
 
 // MARK: - Nested models
 struct Ability: Decodable {
-    let ability: PokemonListItem
+    let ability: APIItem
 }
 
 struct Sprite: Decodable {
@@ -109,7 +98,7 @@ struct Sprite: Decodable {
 }
 
 struct Move: Decodable {
-    let move: PokemonListItem
+    let move: APIItem
 }
 
 struct Cries: Decodable {
@@ -117,12 +106,12 @@ struct Cries: Decodable {
 }
 
 struct Type: Decodable {
-    let type: PokemonListItem
+    let type: APIItem
 }
 
 struct Stat: Decodable {
     let baseStat: Int
-    let stat: PokemonListItem
+    let stat: APIItem
 
     private enum CodingKeys: String, CodingKey {
         case stat
@@ -131,7 +120,7 @@ struct Stat: Decodable {
 
     init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        stat = try container.decode(PokemonListItem.self, forKey: .stat)
+        stat = try container.decode(APIItem.self, forKey: .stat)
         baseStat = try container.decodeIfPresent(Int.self, forKey: .baseStat) ?? 0
     }
 }
