@@ -9,11 +9,14 @@ import UIKit
 
 final class FavouritesViewController: BaseViewController {
     
+    // MARK:  Properties
     var coordinator: CoordinatorProtocol!
     var viewModel: FavouritesViewModelProtocol!
     
+    // MARK:  Outlets
     @IBOutlet private weak var collectionView: UICollectionView!
     
+    // MARK:  Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
         title = "Favourites"
@@ -26,7 +29,9 @@ final class FavouritesViewController: BaseViewController {
         viewModel.loadFavourites()
     }
     
+    // MARK:  Setup
     private func setupCollectionView() {
+        collectionView.backgroundColor = .darkGrey
         collectionView.delegate = self
         collectionView.dataSource = self
         collectionView.register(UINib(nibName: "PokemonCollectionViewCell", bundle: nil), forCellWithReuseIdentifier: "PokemonCollectionViewCell")
@@ -35,12 +40,10 @@ final class FavouritesViewController: BaseViewController {
             layout.estimatedItemSize = .zero
         }
     }
-    
-    
 
 }
 
-// MARK: - CollectionView
+// MARK: - CollectionView Delegate & DataSource
 extension FavouritesViewController: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return viewModel.pokemons.count
