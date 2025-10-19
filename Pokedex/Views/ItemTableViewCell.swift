@@ -11,7 +11,8 @@ import Kingfisher
 class ItemTableViewCell: UITableViewCell {
     
     @IBOutlet weak var itemImageView: UIImageView!
-    @IBOutlet weak var itemName: UILabel!
+    @IBOutlet weak var itemNameLabel: UILabel!
+    @IBOutlet weak var subtitleLabel: UILabel!
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -19,25 +20,40 @@ class ItemTableViewCell: UITableViewCell {
         backgroundColor = .clear
         selectionStyle = .default
         accessoryType = .disclosureIndicator
-        itemName.font = .pixel14
-        itemName.textColor = .white
+        
+        itemNameLabel.font = .pixel14
+        itemNameLabel.textColor = .white
         itemImageView.contentMode = .scaleAspectFit
         itemImageView.layer.masksToBounds = true
+        
+        subtitleLabel.font = .pixel14
+        subtitleLabel.textColor = .lightGray
+        subtitleLabel.numberOfLines = 0
     }
 
     override func prepareForReuse() {
         super.prepareForReuse()
         itemImageView.image = nil
-        itemName.text = nil
+        itemNameLabel.text = nil
+        subtitleLabel.text = nil
+        subtitleLabel.isHidden = true
     }
     
-    // Basit configure: başlık ve opsiyonel görsel URL
-    func configure(title: String, iconURL: URL?) {
-        itemName.text = title
+    func configure(title: String, iconURL: URL?, subtitle: String? = nil) {
+        itemNameLabel.text = title
+        
         if let url = iconURL {
             itemImageView.kf.setImage(with: url, placeholder: UIImage(systemName: "shippingbox"))
         } else {
             itemImageView.image = UIImage(systemName: "shippingbox")
+        }
+        
+        if let subtitle, !subtitle.isEmpty {
+            subtitleLabel.text = subtitle
+            subtitleLabel.isHidden = false
+        } else {
+            subtitleLabel.text = nil
+            subtitleLabel.isHidden = true
         }
     }
 }

@@ -35,7 +35,6 @@ final class ItemsViewController: BaseViewController {
         tableView.delegate = self
         tableView.dataSource = self
         tableView.separatorStyle = .none
-        tableView.rowHeight = 64
         tableView.register(
             UINib(nibName: "ItemTableViewCell", bundle: nil),
             forCellReuseIdentifier: "ItemTableViewCell"
@@ -132,25 +131,22 @@ extension ItemsViewController: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        tableView.deselectRow(at: indexPath, animated: true)
-        viewModel.selectCategory(at: indexPath.row)
+        let selectedCategory = viewModel.categories[indexPath.row]
+        let itemDetailVC = ItemDetailViewBuilder.build(coordinator: coordinator, selectedCategory: selectedCategory)
+        navigate(to: itemDetailVC, coordinator: coordinator)
     }
 }
 
-// MARK: - ItemsViewModelDelegate
-extension ItemsViewController: ItemsViewModelDelegate {
+// MARK: - ItemsViewModelOutput
+extension ItemsViewController: ItemsViewModelOutput {
     func didLoadCategories() {
         categoryIconCache.removeAll()
         inFlightIconFetch.removeAll()
         tableView.reloadData()
     }
     
-    func navigateToCategory(_ categoryName: String, title: String) {
-        print("Navigate to category: \(title) (\(categoryName))")
-        // push item detail view controller
-    }
-    
     func showError(message: String) {
         print("Items error: \(message)")
     }
 }
+

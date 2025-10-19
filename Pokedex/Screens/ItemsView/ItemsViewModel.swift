@@ -8,24 +8,22 @@
 import Foundation
 
 protocol ItemsViewModelProtocol {
-    var delegate: ItemsViewModelDelegate? { get set }
+    var delegate: ItemsViewModelOutput? { get set }
     var categories: [APIItem] { get }
     func fetchCategories(limit: Int, offset: Int)
     func fetchCategories()
-    func selectCategory(at index: Int)
     func fetchCategoryDetail(name: String, completion: @escaping (Result<ItemCategoryDetailResponse, NetworkError>) -> Void)
     func fetchItemDetail(name: String, completion: @escaping (Result<ItemDetail, NetworkError>) -> Void)
 }
 
-protocol ItemsViewModelDelegate: AnyObject {
+protocol ItemsViewModelOutput: AnyObject {
     func didLoadCategories()
-    func navigateToCategory(_ categoryName: String, title: String)
     func showError(message: String)
 }
 
 final class ItemsViewModel: ItemsViewModelProtocol {
     
-    weak var delegate: ItemsViewModelDelegate?
+    weak var delegate: ItemsViewModelOutput?
     private let service: NetworkRouterProtocol
     
     private(set) var categories: [APIItem] = []
@@ -50,14 +48,7 @@ final class ItemsViewModel: ItemsViewModelProtocol {
     func fetchCategories() {
         fetchCategories(limit: 100, offset: 0)
     }
-    
-    func selectCategory(at index: Int) {
-        guard categories.indices.contains(index) else { return }
-        let cat = categories[index]
-        let title = cat.name.replacingOccurrences(of: "-", with: " ").capitalized
-        delegate?.navigateToCategory(cat.name, title: title)
-    }
-    
+        
     // MARK: - Forward item endpoints (ikon icin)
     func fetchCategoryDetail(name: String, completion: @escaping (Result<ItemCategoryDetailResponse, NetworkError>) -> Void) {
         service.fetchItemCategoryDetail(idOrName: name, completion: completion)
