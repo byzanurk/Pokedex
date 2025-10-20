@@ -21,9 +21,9 @@ struct ItemDetail: Decodable {
     }
     
     var englishEffect: String? {
-        effectEntries?
-            .first(where: { $0.language.name.lowercased() == "en" })?
-            .effect
+        effectEntries?.first {
+            $0.language.name.caseInsensitiveCompare("en") == .orderedSame
+        }?.effect
     }
 }
 

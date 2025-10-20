@@ -122,9 +122,9 @@ extension ItemsViewController: UITableViewDelegate, UITableViewDataSource {
         let title = category.name.replacingOccurrences(of: "-", with: " ").capitalized
         
         if let url = categoryIconCache[category.name] {
-            cell.configure(title: title, iconURL: url)
+            cell.configure(title: title, iconURL: url, subtitle: nil)
         } else {
-            cell.configure(title: title, iconURL: nil)
+            cell.configure(title: title, iconURL: nil, subtitle: nil)
             loadIconIfNeeded(for: indexPath)
         }
         return cell

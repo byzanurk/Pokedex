@@ -17,6 +17,7 @@ protocol ItemDetailViewModelProtocol {
 
 protocol ItemDetailViewModelOutput: AnyObject {
     func showError(message: String)
+    func didUpdateItems()
 }
 
 final class ItemDetailViewModel: ItemDetailViewModelProtocol {
@@ -44,20 +45,31 @@ final class ItemDetailViewModel: ItemDetailViewModelProtocol {
 
                 for item in apiItems {
                     group.enter()
-                    self.service.fetchItemDetail(name: item.name) { result in
+                    self.service.fetchItemDetail(
+                        name: item.name
+                            .lowercased()
+                            .replacingOccurrences(of: " ", with: "-")
+                    ) { result in
                         switch result {
                         case .success(let detail):
                             detailedItems.append(detail)
-                        case .failure:
-                            break
+                            
+                            if let effect = detail.effectEntries?.first(where: { $0.language.name.caseInsensitiveCompare("en") == .orderedSame })?.effect {
+                                print("✅ \(detail.name ?? "-") -> effect: \(effect)")
+                            } else {
+                                print("⚠️ \(detail.name ?? "-") -> effect_entries missing or empty")
+                            }
+                            
+                        case .failure(let error):
+                            print("❌ Failed to fetch \(item.name): \(error.localizedDescription)")
                         }
                         group.leave()
                     }
                 }
 
                 group.notify(queue: .main) {
-                    self.items = detailedItems
-                    (self.delegate as? ItemDetailViewController)?.tableView.reloadData()
+                    self.items = detailedItems.sorted { ($0.name ?? "") < ($1.name ?? "") }
+                    self.delegate?.didUpdateItems()
                 }
 
             case .failure(let error):
@@ -65,7 +77,4 @@ final class ItemDetailViewModel: ItemDetailViewModelProtocol {
             }
         }
     }
-    
-    
 }
-

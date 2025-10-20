@@ -39,7 +39,7 @@ class ItemTableViewCell: UITableViewCell {
         subtitleLabel.isHidden = true
     }
     
-    func configure(title: String, iconURL: URL?, subtitle: String? = nil) {
+    func configure(title: String, iconURL: URL?, subtitle: String?) {
         itemNameLabel.text = title
         
         if let url = iconURL {
