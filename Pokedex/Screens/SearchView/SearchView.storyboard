@@ -15,18 +15,72 @@
                     <view key="view" contentMode="scaleToFill" id="5EZ-qb-Rvc">
                         <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <searchBar contentMode="redraw" translatesAutoresizingMaskIntoConstraints="NO" id="csG-Tw-WSG">
+                                <rect key="frame" x="0.0" y="118" width="393" height="64"/>
+                                <textInputTraits key="textInputTraits"/>
+                                <connections>
+                                    <outlet property="delegate" destination="Y6W-OH-hqX" id="I7N-ud-bjk"/>
+                                </connections>
+                            </searchBar>
+                            <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="Hcg-dl-9Rx">
+                                <rect key="frame" x="0.0" y="182" width="393" height="670"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                <collectionViewFlowLayout key="collectionViewLayout" automaticEstimatedItemSize="YES" minimumLineSpacing="10" minimumInteritemSpacing="10" id="PjC-sT-IEZ">
+                                    <size key="itemSize" width="128" height="128"/>
+                                    <size key="headerReferenceSize" width="0.0" height="0.0"/>
+                                    <size key="footerReferenceSize" width="0.0" height="0.0"/>
+                                    <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
+                                </collectionViewFlowLayout>
+                                <cells/>
+                            </collectionView>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="9NS-br-KCM">
+                                <rect key="frame" x="0.0" y="182" width="393" height="670"/>
+                                <subviews>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="No Results Found" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="zdV-sZ-FT1">
+                                        <rect key="frame" x="129" y="325" width="134" height="21"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <color key="textColor" systemColor="systemGrayColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                </subviews>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            </view>
+                        </subviews>
                         <viewLayoutGuide key="safeArea" id="vDu-zF-Fre"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="9NS-br-KCM" firstAttribute="top" secondItem="csG-Tw-WSG" secondAttribute="bottom" id="2Dy-HR-p4b"/>
+                            <constraint firstItem="vDu-zF-Fre" firstAttribute="trailing" secondItem="9NS-br-KCM" secondAttribute="trailing" id="6h2-QI-gUT"/>
+                            <constraint firstItem="Hcg-dl-9Rx" firstAttribute="leading" secondItem="vDu-zF-Fre" secondAttribute="leading" id="DUg-mV-UkP"/>
+                            <constraint firstItem="csG-Tw-WSG" firstAttribute="trailing" secondItem="vDu-zF-Fre" secondAttribute="trailing" id="Eli-3f-u1K"/>
+                            <constraint firstItem="Hcg-dl-9Rx" firstAttribute="top" secondItem="csG-Tw-WSG" secondAttribute="bottom" id="JcB-Jh-S8J"/>
+                            <constraint firstAttribute="bottom" secondItem="Hcg-dl-9Rx" secondAttribute="bottom" id="Qbo-I0-sgB"/>
+                            <constraint firstItem="vDu-zF-Fre" firstAttribute="trailing" secondItem="Hcg-dl-9Rx" secondAttribute="trailing" id="d0n-uX-DIL"/>
+                            <constraint firstItem="csG-Tw-WSG" firstAttribute="top" secondItem="vDu-zF-Fre" secondAttribute="top" id="fez-vv-HBZ"/>
+                            <constraint firstItem="9NS-br-KCM" firstAttribute="leading" secondItem="vDu-zF-Fre" secondAttribute="leading" id="u5g-4h-a0D"/>
+                            <constraint firstItem="csG-Tw-WSG" firstAttribute="leading" secondItem="vDu-zF-Fre" secondAttribute="leading" id="xAO-Dv-Zka"/>
+                            <constraint firstAttribute="bottom" secondItem="9NS-br-KCM" secondAttribute="bottom" id="xw2-L3-JNW"/>
+                        </constraints>
                     </view>
+                    <connections>
+                        <outlet property="collectionView" destination="Hcg-dl-9Rx" id="YQZ-M4-4ft"/>
+                        <outlet property="emptyStateView" destination="9NS-br-KCM" id="pLq-su-0r8"/>
+                        <outlet property="searchBar" destination="csG-Tw-WSG" id="ok8-fR-5Zk"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Ief-a0-LHa" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="139" y="131"/>
+            <point key="canvasLocation" x="138.1679389312977" y="130.98591549295776"/>
         </scene>
     </scenes>
     <resources>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+        <systemColor name="systemGrayColor">
+            <color red="0.5568627451" green="0.5568627451" blue="0.57647058819999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
     </resources>
 </document>
