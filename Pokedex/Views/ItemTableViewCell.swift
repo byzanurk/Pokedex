@@ -8,11 +8,11 @@
 import UIKit
 import Kingfisher
 
-class ItemTableViewCell: UITableViewCell {
+final class ItemTableViewCell: UITableViewCell {
     
-    @IBOutlet weak var itemImageView: UIImageView!
-    @IBOutlet weak var itemNameLabel: UILabel!
-    @IBOutlet weak var subtitleLabel: UILabel!
+    @IBOutlet private weak var itemImageView: UIImageView!
+    @IBOutlet private weak var itemNameLabel: UILabel!
+    @IBOutlet private weak var subtitleLabel: UILabel!
     
     override func awakeFromNib() {
         super.awakeFromNib()
