@@ -6,14 +6,14 @@
 
 import UIKit
 
-class ItemDetailViewController: UIViewController {
+final class ItemDetailViewController: UIViewController {
 
     // MARK:  Properties
     var coordinator: CoordinatorProtocol!
     var viewModel: ItemDetailViewModelProtocol!
     
     // MARK:  Outlets
-    @IBOutlet weak var tableView: UITableView!
+    @IBOutlet private weak var tableView: UITableView!
     
     override func viewDidLoad() {
         super.viewDidLoad()

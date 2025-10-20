@@ -15,12 +15,12 @@ final class SearchViewController: BaseViewController {
     @IBOutlet private weak var searchBar: UISearchBar!
     @IBOutlet private weak var collectionView: UICollectionView!
     @IBOutlet private weak var emptyStateView: UIView!
+    @IBOutlet private weak var emptyStateLabel: UILabel!
     
     override func viewDidLoad() {
         super.viewDidLoad()
         title = "Search"
         emptyStateView.isHidden = false
-        searchBar.placeholder = "Search Pokémon"
         searchBar.delegate = self
         viewModel.delegate = self
         setupSearchBarAppearance()
@@ -34,13 +34,19 @@ final class SearchViewController: BaseViewController {
         searchBar.barTintColor = .darkGrey
         searchBar.isTranslucent = true
         searchBar.backgroundColor = .darkGrey
+        searchBar.placeholder = "Search Pokemon"
+        
+        emptyStateLabel.font = UIFont.pixel14
         
         let textField = searchBar.searchTextField
         textField.backgroundColor = .clear
         textField.textColor = .label
         textField.attributedPlaceholder = NSAttributedString(
             string: searchBar.placeholder ?? "",
-            attributes: [.foregroundColor: UIColor.secondaryLabel]
+            attributes: [
+                .foregroundColor: UIColor.secondaryLabel,
+                .font: UIFont.pixel14
+            ]
         )
     }
     

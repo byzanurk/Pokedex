@@ -8,7 +8,7 @@
 import UIKit
 import Kingfisher
 
-class PokemonDetailViewController: UIViewController {
+final class PokemonDetailViewController: UIViewController {
 
     // MARK:  Properties
     var coordinator: CoordinatorProtocol!

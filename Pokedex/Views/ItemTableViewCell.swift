@@ -12,7 +12,7 @@ final class ItemTableViewCell: UITableViewCell {
     
     @IBOutlet private weak var itemImageView: UIImageView!
     @IBOutlet private weak var itemNameLabel: UILabel!
-    @IBOutlet private weak var subtitleLabel: UILabel!
+    @IBOutlet weak var subtitleLabel: UILabel!
     
     override func awakeFromNib() {
         super.awakeFromNib()
