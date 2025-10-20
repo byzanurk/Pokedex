@@ -140,9 +140,11 @@ extension ItemsViewController: UITableViewDelegate, UITableViewDataSource {
 // MARK: - ItemsViewModelOutput
 extension ItemsViewController: ItemsViewModelOutput {
     func didLoadCategories() {
-        categoryIconCache.removeAll()
-        inFlightIconFetch.removeAll()
-        tableView.reloadData()
+        DispatchQueue.main.async {
+            self.categoryIconCache.removeAll()
+            self.inFlightIconFetch.removeAll()
+            self.tableView.reloadData()
+        }
     }
     
     func showError(message: String) {

@@ -90,7 +90,9 @@ extension FavouritesViewController: UICollectionViewDelegate, UICollectionViewDa
 // MARK: - FavouritesViewModelOutput
 extension FavouritesViewController: FavouritesViewModelOutput {
     func didFetchFavourites() {
-        collectionView.reloadData()
+        DispatchQueue.main.async {
+            self.collectionView.reloadData()
+        }
     }
     
     func showError(message: String) {

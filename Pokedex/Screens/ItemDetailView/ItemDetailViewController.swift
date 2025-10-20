@@ -79,6 +79,8 @@ extension ItemDetailViewController: ItemDetailViewModelOutput {
     }
     
     func didUpdateItems() {
-        tableView.reloadData()
+        DispatchQueue.main.async {
+            self.tableView.reloadData()
+        }
     }
 }
