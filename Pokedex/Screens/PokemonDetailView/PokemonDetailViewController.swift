@@ -344,8 +344,10 @@ final class PokemonDetailViewController: UIViewController {
 // MARK: - PokemonDetailViewModelOutput
 extension PokemonDetailViewController: PokemonDetailViewModelOutput {
     func didLoadPokemon(_ pokemon: Pokemon) {
-        isBookmarked = false
-        bindUI(with: pokemon)
+        DispatchQueue.main.async {
+            self.isBookmarked = false
+            self.bindUI(with: pokemon)
+        }
     }
     
     func showError(message: String) {
