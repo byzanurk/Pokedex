@@ -9,7 +9,7 @@ import Foundation
 
 protocol NetworkRouterProtocol {
     // Pokemon
-    func fetchPokemonList(limit: Int, offset: Int, completion: @escaping (Result<PokemonListResponse, NetworkError>) -> Void)
+    func fetchPokemonList(limit: Int, offset: Int, completion: @escaping (Result<NamedAPIResourceList, NetworkError>) -> Void)
     func fetchPokemonDetail(id: Int, completion: @escaping (Result<Pokemon, NetworkError>) -> Void)
 
     // Items
@@ -27,7 +27,7 @@ final class NetworkRouter: NetworkRouterProtocol {
     }
     
     // MARK: - Pokemon
-    func fetchPokemonList(limit: Int, offset: Int, completion: @escaping (Result<PokemonListResponse, NetworkError>) -> Void) {
+    func fetchPokemonList(limit: Int, offset: Int, completion: @escaping (Result<NamedAPIResourceList, NetworkError>) -> Void) {
         let endpoint = PokemonEndpoint.list(limit: limit, offset: offset)
         service.request(endpoint, completion: completion)
     }

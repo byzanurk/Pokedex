@@ -8,8 +8,8 @@
 import Foundation
 
 protocol SearchViewModelProtocol {
-    var pokemons: [Pokemon] { get set }     // filtrelenmis liste
-    var allPokemons: [Pokemon] { get set }  // temel liste
+    var pokemons: [Pokemon] { get set }
+    var allPokemons: [Pokemon] { get set }
     var delegate: SearchViewModelOutput? { get set }
     func fetchAllPokemons()
 }

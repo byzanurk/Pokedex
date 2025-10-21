@@ -59,8 +59,7 @@ final class ItemsViewController: BaseViewController {
                     guard index < items.count else { completion(nil); return }
                     let itemName = items[index].name
                     print("fetching item detail for icon (try \(index+1)/\(items.count)): \(itemName)")
-                    self.viewModel.fetchItemDetail(name: itemName) { [weak self] itemResult in
-                        guard let self else { return }
+                    self.viewModel.fetchItemDetail(name: itemName) { itemResult in
                         switch itemResult {
                         case .success(let itemDetail):
                             if let urlString = itemDetail.sprites?.defaultURL, let url = URL(string: urlString) {
@@ -151,4 +150,3 @@ extension ItemsViewController: ItemsViewModelOutput {
         print("Items error: \(message)")
     }
 }
-

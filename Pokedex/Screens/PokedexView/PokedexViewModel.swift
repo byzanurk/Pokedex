@@ -37,14 +37,14 @@ final class PokedexViewModel: PokedexViewModelProtocol {
             guard let self = self else { return }
             switch result {
             case .success(let listResponse):
-                print("Fetched list count:", listResponse.results.count)
+//                print("Fetched list count:", listResponse.results.count)
                 let group = DispatchGroup()
                 var fetchedPokemons: [Pokemon] = []
                 fetchedPokemons.reserveCapacity(listResponse.results.count)
                 
                 for item in listResponse.results {
                     guard let id = Self.extractID(from: item.url) else {
-                        print("Could not extract ID from url: \(item.url)")
+//                        print("Could not extract ID from url: \(item.url)")
                         continue
                     }
                     
@@ -52,26 +52,26 @@ final class PokedexViewModel: PokedexViewModelProtocol {
                     self.service.fetchPokemonDetail(id: id) { detailResult in
                         switch detailResult {
                         case .success(let pokemon):
-                            print("Fetched pokemon:", pokemon.name)
+//                            print("Fetched pokemon:", pokemon.name)
                             self.pokemonsLock.lock()
                             fetchedPokemons.append(pokemon)
                             self.pokemonsLock.unlock()
                             group.leave()
-                        case .failure(let error):
-                            print("❌ fetchPokemonDetail failed for id \(id):", error)
+                        case .failure:
+//                            print("❌ fetchPokemonDetail failed for id \(id):", error)
                             group.leave()
                         }
                     }
                 }
                 
                 group.notify(queue: .main) {
-                    print("All fetches complete. Total fetched:", fetchedPokemons.count)
+//                    print("All fetches complete. Total fetched:", fetchedPokemons.count)
                     self.pokemons = fetchedPokemons
                     self.pokemons.sort(by: self.currentSortOption.sortDescriptor)
                     self.delegate?.didFetchPokemons()
                 }
             case .failure(let error):
-                print("❌ fetchPokemonList failed:", error)
+//                print("❌ fetchPokemonList failed:", error)
                 DispatchQueue.main.async {
                     self.delegate?.showError(message: error.localizedDescription)
                 }
